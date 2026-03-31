@@ -8,5 +8,5 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_executable(code main.cpp)
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-  target_compile_options(code PRIVATE -O2 -pipe -static -s -fno-exceptions -fno-rtti -march=native)
+  target_compile_options(code PRIVATE -O2 -pipe -s -fno-exceptions -fno-rtti -march=native)
 endif()

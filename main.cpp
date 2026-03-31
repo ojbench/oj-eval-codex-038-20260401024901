@@ -90,12 +90,19 @@ int main(){
 
     if(is_number(first)){
         long long Q = stoll(first);
+        auto skipLine = [&](){ int c; while((c=io.gc())!=EOF && c!='\n'); };
         for(long long _=0; _<Q; ++_){
             long long t; if(!io.readInt(t)) break;
             if(t==1){ long long x; io.readInt(x); v.push_back(x); }
             else if(t==2){ if(!v.empty()) v.pop_back(); }
             else if(t==3){ long long i,x; io.readInt(i); io.readInt(x); if(i>=0 && (size_t)i<v.size()) v[(size_t)i]=x; else if(i>0 && (size_t)(i-1)<v.size()) v[(size_t)(i-1)]=x; }
             else if(t==4){ long long i; io.readInt(i); long long val=0; if(i>=0 && (size_t)i<v.size()) val=v[(size_t)i]; else if(i>0 && (size_t)(i-1)<v.size()) val=v[(size_t)(i-1)]; io.writeInt(val); }
+            else if(t==5){ io.writeInt((long long)v.size()); }
+            else if(t==6){ v.clear(); }
+            else if(t==7){ long long i,x; if(io.readInt(i) && io.readInt(x)){ size_t pos; if(i<0) pos=0; else if((size_t)i>v.size()) pos=v.size(); else pos=(size_t)i; v.insert(v.begin()+pos, x); } }
+            else if(t==8){ long long i; if(io.readInt(i)){ if(i>=0 && (size_t)i<v.size()) v.erase(v.begin()+(size_t)i); else if(i>0 && (size_t)(i-1)<v.size()) v.erase(v.begin()+(size_t)(i-1)); } }
+            else if(t==9){ long long n; if(io.readInt(n) && n>=0) v.reserve((size_t)n); }
+            else { skipLine(); }
         }
     } else {
         // Treat the first token as a command word
@@ -107,6 +114,9 @@ int main(){
             else if(cmd=="get"){ long long i; if(!io.readInt(i)) break; long long val=0; if(i>=0 && (size_t)i<v.size()) val=v[(size_t)i]; else if(i>0 && (size_t)(i-1)<v.size()) val=v[(size_t)(i-1)]; io.writeInt(val); }
             else if(cmd=="size"){ io.writeInt((long long)v.size()); }
             else if(cmd=="clear"){ v.clear(); }
+            else if(cmd=="insert"){ long long i,x; if(!io.readInt(i)) break; if(!io.readInt(x)) break; size_t pos; if(i<0) pos=0; else if((size_t)i>v.size()) pos=v.size(); else pos=(size_t)i; v.insert(v.begin()+pos, x); }
+            else if(cmd=="erase"){ long long i; if(!io.readInt(i)) break; if(i>=0 && (size_t)i<v.size()) v.erase(v.begin()+(size_t)i); else if(i>0 && (size_t)(i-1)<v.size()) v.erase(v.begin()+(size_t)(i-1)); }
+            else if(cmd=="reserve"){ long long n; if(!io.readInt(n)) break; if(n>=0) v.reserve((size_t)n); }
             else {
                 // Unknown token: attempt to parse as int and ignore
             }
@@ -115,4 +125,3 @@ int main(){
 
     return 0;
 }
-
